@@ -17,4 +17,4 @@ async def on_message(message):
     if message.content.startswith('$blig'):
         await message.channel.send('Hello!')
 
-client.run('MTAyMjI2MzMzNjQ3MTEwOTc5Mg.Gu1CbV.eGAVD6ydQLXW1OvYlFEuxtEDsjan5X2lpPNoMw')
+client.run('YOUR_TOKEN')
