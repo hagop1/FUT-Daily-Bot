@@ -1,5 +1,5 @@
 LEAGUE_CODE = { 
-    "ARM": 2022
+    "ARM": 2022,
     "BSA": 2022,    #Brazilian First Division
     "BL": 2022,     #Bundesliga
     "FL1": 2022,    #Ligue 1
