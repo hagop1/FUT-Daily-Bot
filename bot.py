@@ -9,6 +9,7 @@ from datetime import date
 from discord.ext.commands import Bot
 from emoji import emojize
 
+
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 APIKEY = os.getenv('API_KEY')
@@ -91,8 +92,6 @@ async def _command(ctx):
             await channel.send('ligue 1') 
 
         await bot.process_commands(message)
-
-
 
 #ON_MESSAGE FUNCTION IS USED WHEN A MESSAGE IS SENT ON THE SERVER AND THE BOT READS AND DETERMINES IF IT SHOULD RESPOND.
 # @client.event
