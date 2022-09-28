@@ -1,4 +1,4 @@
-# &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Football Daily Bot
+# Football Daily Bot
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/hagop1/FUT-Daily-Bot?color=red)
 ![GitHub top language](https://img.shields.io/github/languages/top/hagop1/FUT-Daily-Bot)
 ![Lines of code](https://img.shields.io/tokei/lines/github/hagop1/FUT-Daily-Bot)
