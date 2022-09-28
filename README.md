@@ -17,3 +17,6 @@ FUT Daily Bot is an open source Discord bot that is continuously growing. You ca
 * Predictions
 * ~~Connect API~~
 * Slash command implementation
+* League Codes
+* Team Codes
+* Tournament Codes
