@@ -7,7 +7,9 @@ import emoji
 from dotenv import load_dotenv
 from datetime import date
 from discord.ext.commands import Bot
+from discord import app_commands
 from emoji import emojize
+# from leagueCommand import *
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -22,27 +24,39 @@ league = None
 actual_date = date.today()
 
 #API URL'S
+main_url = os.getenv('API_URL')
 fixture_url = os.getenv('API_URL_FIXTURES')
-
-querystring = {"date":actual_date}
+standings_url = os.getenv('API_URL_STANDINGS')
 
 headers = {
     "X-RapidAPI-Key": APIKEY,
     "X-RapidAPI-Host": APIHOST}
 
-response = requests.request("GET", fixture_url, headers=headers, params=querystring)
+# url_extension = {'league-standings':
+#                     {'api':
 
-responded = response.text
+#                     }
+    
+#                 }
+
 
 # DUE TO LATEST DISCORD.PY AND BOT UPDATES INTENTS NEED TO BE SET
 intents = discord.Intents.default()
 intents.message_content = True
 
-client = discord.Client(intents = intents)
 bot = Bot("!", intents = intents)
 
-#CLIENT.EVENT IS A FUNCTION STARTER. IT MUST BE USED WHEN WRITTING A FUNCTION FOR THE BOT TO RUN ON.
-#ON_READY IS THE FUNCTION THAT IS USED WHEN THE BOT GOES ONLINE
+# class aclient(discord.Client):
+#     def __init__(self):
+#         super().__init__(intents = discord.Intents.default())
+#         self.synced = False
+
+#     async def on_ready(self):
+
+# client = aclient()
+# tree = app_commands.CommandsTree(client)
+
+
 
 @bot.command(name =  "tournament")
 async def _command(ctx):
@@ -52,8 +66,32 @@ async def _command(ctx):
         \n3. Europa League :trophy:\
         \n4. Europa Conference League :soccer:', language = 'alias'))
 
+    @bot.event
+    async def on_message(message):
+        if message.content.startswith('1'):
+            channel = message.channel #sets variable to same channel user message was sent
+            await channel.send('test tourney')
 
-@bot.command(name = "league")
+        elif message.content.startswith('2'):
+            channel = message.channel
+            await channel.send('la liga')
+
+        elif message.content.startswith('3'):
+            channel = message.channel
+            await channel.send('seria a')
+
+        elif message.content.startswith('4'):
+            channel = message.channel
+            await channel.send('bundesliga')
+
+        elif message.content.startswith('5'):
+            channel = message.channel
+            await channel.send('ligue 1') 
+
+        await bot.process_commands(message)
+
+
+@bot.command(name = "league", help='Displays standings with all details')
 async def _command(ctx):
     await ctx.send(emoji.emojize('What league?\
         \n1. Premier League :England:\
@@ -66,13 +104,9 @@ async def _command(ctx):
     async def on_message(message):
         if message.content.startswith('1'):
             channel = message.channel #sets variable to same channel user message was sent
-            await channel.send('premier leagueee')
-
-            def check(m):
-                return m.content == 'premier leagueee' and m.channel == channel
-
-            msg = await client.wait_for('message', check = check)
-            await channel.send(f'here is the premier league')
+            querystring = {"season" : "2022", "league" : "1"}
+            response = requests.request("GET", standings_url, headers = headers, params = querystring )
+            await channel.send(response.text)
 
         elif message.content.startswith('2'):
             channel = message.channel
