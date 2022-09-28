@@ -53,6 +53,32 @@ async def _command(ctx):
         \n3. Europa League :trophy:\
         \n4. Europa Conference League :soccer:', language = 'alias'))
 
+    @bot.event
+    async def on_message(message):
+        if message.content.startswith('1'):
+            channel = message.channel #sets variable to same channel user message was sent
+            await channel.send(emoji.emojize('World Cup :earth_americas:'))
+
+            def check(m):
+                return m.content == 'World Cup' and m.channel == channel
+
+            msg = await client.wait_for('message', check = check)
+            await channel.send(f'here is the world cup')
+
+        elif message.content.startswith('2'):
+            channel = message.channel
+            await channel.send(emoji.emojize('Champions League :crown:'))
+
+        elif message.content.startswith('3'):
+            channel = message.channel
+            await channel.send(emoji.emojize('Europa League :trophy:'))
+
+        elif message.content.startswith('4'):
+            channel = message.channel
+            await channel.send(emoji.emojize('Europa Conference League :soccer:'))
+
+        await bot.process_commands(message)
+
 
 @bot.command(name = "league")
 async def _command(ctx):
@@ -67,7 +93,7 @@ async def _command(ctx):
     async def on_message(message):
         if message.content.startswith('1'):
             channel = message.channel #sets variable to same channel user message was sent
-            await channel.send('premier leagueee')
+            await channel.send(emoji.emojize('Premier League :England:'))
 
             def check(m):
                 return m.content == 'premier leagueee' and m.channel == channel
@@ -77,19 +103,19 @@ async def _command(ctx):
 
         elif message.content.startswith('2'):
             channel = message.channel
-            await channel.send('la liga')
+            await channel.send(emoji.emojize('La Liga :Spain:'))
 
         elif message.content.startswith('3'):
             channel = message.channel
-            await channel.send('seria a')
+            await channel.send(emoji.emojize('Seria A :Italy:'))
 
         elif message.content.startswith('4'):
             channel = message.channel
-            await channel.send('bundesliga')
+            await channel.send(emoji.emojize('Bundesliga :Germany:'))
 
         elif message.content.startswith('5'):
             channel = message.channel
-            await channel.send('ligue 1') 
+            await channel.send(emoji.emojize('Ligue 1 Uber Eats :France:')) 
 
         await bot.process_commands(message)
 
@@ -124,3 +150,12 @@ async def _command(ctx):
 #         await message.channel.send('')
 
 bot.run(TOKEN)
+
+
+
+
+
+
+
+
+
