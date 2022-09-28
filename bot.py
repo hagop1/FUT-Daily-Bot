@@ -20,11 +20,9 @@ playername = None
 tournament = None
 league = None
 actual_date = date.today()
-# user_input_date = input()
 
-# today = input()
-
-url = "https://api-football-v1.p.rapidapi.com/v3/fixtures"
+#API URL'S
+fixture_url = os.getenv('API_URL_FIXTURES')
 
 querystring = {"date":actual_date}
 
@@ -32,10 +30,7 @@ headers = {
     "X-RapidAPI-Key": APIKEY,
     "X-RapidAPI-Host": APIHOST}
 
-response = requests.request("GET", url, headers=headers, params=querystring)
-
-# print(response.text)
-# print(today)
+response = requests.request("GET", fixture_url, headers=headers, params=querystring)
 
 responded = response.text
 
@@ -48,10 +43,14 @@ bot = Bot("!", intents = intents)
 
 #CLIENT.EVENT IS A FUNCTION STARTER. IT MUST BE USED WHEN WRITTING A FUNCTION FOR THE BOT TO RUN ON.
 #ON_READY IS THE FUNCTION THAT IS USED WHEN THE BOT GOES ONLINE
-# @client.event
-# async def on_ready():
-#     print(f'We have logged in as {client.user}')
-#     print(f'Your API KEY IS {APIKEY}')
+
+@bot.command(name =  "tournament")
+async def _command(ctx):
+    await ctx.send(emoji.emojize('Which tournament?\
+        \n1. World Cup :earth_americas:\
+        \n2. Champions League :crown:\
+        \n3. Europa League :trophy:\
+        \n4. Europa Conference League :soccer:', language = 'alias'))
 
 
 @bot.command(name = "league")
@@ -63,37 +62,35 @@ async def _command(ctx):
         \n4. Bundesliga :Germany:\
         \n5. Ligue 1 :France:'))
 
-@bot.event
-async def on_message(message):
-    if message.content.startswith('1'):
-        channel = message.channel #sets variable to same channel user message was sent
-        await channel.send('premier leagueee')
-    await bot.process_commands(message)
-    
+    @bot.event
+    async def on_message(message):
+        if message.content.startswith('1'):
+            channel = message.channel #sets variable to same channel user message was sent
+            await channel.send('premier leagueee')
 
+            def check(m):
+                return m.content == 'premier leagueee' and m.channel == channel
 
+            msg = await client.wait_for('message', check = check)
+            await channel.send(f'here is the premier league')
 
-    # def check(msg):
-    #     return msg.author == ctx.author and \
-    #     msg.channel == ctx.channel and msg.content in ["1", "2", "3", "4", "5"]
+        elif message.content.startswith('2'):
+            channel = message.channel
+            await channel.send('la liga')
 
-    # msg = await client.wait_for("message", check=check)
-    # if msg.content() == "1": #Premier league
-    #     await ctx.send("print premier league")
+        elif message.content.startswith('3'):
+            channel = message.channel
+            await channel.send('seria a')
 
-    # elif msg.content() == "2": #La Liga
-    #     await ctx.send("print la liga")
+        elif message.content.startswith('4'):
+            channel = message.channel
+            await channel.send('bundesliga')
 
-    # elif msg.content() == "3": #Seria A
-    #     await ctx.send("print seria a")
+        elif message.content.startswith('5'):
+            channel = message.channel
+            await channel.send('ligue 1') 
 
-    # elif msg.content() == "4": #Bundesliga
-    #     await ctx.send("print bundesliga")
-
-    # elif msg.content() == "5": #Ligue 1
-    #     await ctx.send("print ligue 1")
-
-    # times_used = times_used + 1
+        await bot.process_commands(message)
 
 
 
