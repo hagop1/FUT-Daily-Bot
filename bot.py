@@ -2,6 +2,7 @@ import discord
 import os
 import requests
 import emoji
+# import urllib.request
 
 #IMPORTING .ENV FILES AND PLACING THEM IN VARIABLES
 from dotenv import load_dotenv
@@ -9,35 +10,25 @@ from datetime import date
 from discord.ext.commands import Bot
 from discord import app_commands
 from emoji import emojize
-# from leagueCommand import *
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 APIKEY = os.getenv('API_KEY')
 APIHOST = os.getenv('API_HOST')
 
-#COMMAND VARIABLES
-teamname = None
-playername = None
-tournament = None
-league = None
+#VARIABLES
 actual_date = date.today()
+
 
 #API URL'S
 main_url = os.getenv('API_URL')
+leagues_url = os.getenv('API_URL_LEAGUES')
 fixture_url = os.getenv('API_URL_FIXTURES')
 standings_url = os.getenv('API_URL_STANDINGS')
 
 headers = {
     "X-RapidAPI-Key": APIKEY,
     "X-RapidAPI-Host": APIHOST}
-
-# url_extension = {'league-standings':
-#                     {'api':
-
-#                     }
-    
-#                 }
 
 
 # DUE TO LATEST DISCORD.PY AND BOT UPDATES INTENTS NEED TO BE SET
@@ -56,7 +47,74 @@ bot = Bot("!", intents = intents)
 # client = aclient()
 # tree = app_commands.CommandsTree(client)
 
+@bot.command(name =  "fixtures")
+async def _command(ctx):
+    await ctx.send(emoji.emojize('Which league?\
+        \n1. World Cup :earth_americas:\
+        \n2. Champions League :crown:\
+        \n3. Europa League :trophy:\
+        \n4. Europa Conference League :soccer:\
+        \n5. Premier League :England:\
+        \n6. La Liga :Spain:\
+        \n7. Seria A :Italy:\
+        \n8. Bundesliga :Germany:\
+        \n9. Ligue 1 :France:', language = 'alias'))
 
+    @bot.event
+    async def on_message(message):
+        if message.content.startswith('1'): #World Cup
+            channel = message.channel #sets variable to same channel user message was sent
+            querystring = {"league":"39", "season":"2022", "date":actual_date}
+            response_test = requests.request("GET", fixture_url, headers = headers, params = querystring )
+            jsonResponse = response_test.json()
+            #most possible Premier league games in a day is 10
+            i = -1
+            while i < 10:
+                i += 1 
+                await message.channel.send(( 
+                    jsonResponse["response"][i]["teams"]["home"]["name"] #team home 
+                    + '  :regional_indicator_v::regional_indicator_s:  '  
+                    + jsonResponse["response"][i]["teams"]["away"]["name"] #team away
+                    + " \n"
+                    + str(jsonResponse["response"][i]["score"]["fulltime"]["home"]) #score home
+                    + " - "
+                    + str(jsonResponse["response"][i]["score"]["fulltime"]["away"]) #score away
+                    ))
+            # must itterate through all games under ["response"][number], <- can't keep hardcoding these numbers
+
+        elif message.content.startswith('2'): #Champions League
+            channel = message.channel
+            
+
+        elif message.content.startswith('3'): #Europa League
+            channel = message.channel
+            
+
+        elif message.content.startswith('4'): #Europa Conference League
+            channel = message.channel
+            
+
+        elif message.content.startswith('5'): #Premier League
+            channel = message.channel
+             
+
+        elif message.content.startswith('6'): #La Liga
+            channel = message.channel
+            
+
+        elif message.content.startswith('7'): #Seria A
+            channel = message.channel
+            await channel.send('seria a')
+
+        elif message.content.startswith('8'): #Bundesliga
+            channel = message.channel
+            await channel.send('bundesliga')
+
+        elif message.content.startswith('9'): #Ligue 1
+            channel = message.channel
+            await channel.send('ligue 1')
+
+        await bot.process_commands(message)
 
 @bot.command(name =  "tournament")
 async def _command(ctx):
@@ -104,17 +162,52 @@ async def _command(ctx):
     async def on_message(message):
         if message.content.startswith('1'):
             channel = message.channel #sets variable to same channel user message was sent
-            querystring = {"season" : "2022", "league" : "1"}
-            response = requests.request("GET", standings_url, headers = headers, params = querystring )
-            await channel.send(response.text)
+            ##############################################################################################
+            # querystring = {"season" : "2022", "team" : "1"}
+            # response_test = requests.request("GET", standings_url, headers = headers, params = querystring )
+            # jsonResponse = response_test.json()
+
+            # # embedVar = discord.Embed(title = "Premier league", description = jsonResponse, color = 0xFF9900)
+            # # await message.channel.send(embed=embedVar)
+            # await message.channel.send(jsonResponse["response"][0]["league"]["name"])
+            # # await message.channel.send(jsonResponse["response"][0]["league"]["season"])
+            # await message.channel.send(jsonResponse["response"][0]["league"]["country"])
+            # await ctx.send(jsonResponse["response"][0]["league"]["logo"])
+            ##############################################################################################
 
         elif message.content.startswith('2'):
             channel = message.channel
-            await channel.send('la liga')
+            ##############################################################################################
+            # querystring = {"id": "39"}
+            # response_test = requests.request("GET", leagues_url, headers=headers, params=querystring)
+            # jsonResponse = response_test.json()
+
+            # await message.channel.send(jsonResponse["response"][0]["league"]["name"])
+            # await message.channel.send(jsonResponse["response"][0]["country"]["name"])
+            # await ctx.send(jsonResponse["response"][0]["league"]["logo"])
+            ##############################################################################################
+
 
         elif message.content.startswith('3'):
             channel = message.channel
-            await channel.send('seria a')
+            ##############################################################################################
+            # querystring = {"season": "2022", "league": "39"}
+            # response_test = requests.request("GET", standings_url, headers = headers, params = querystring)
+            # jsonResponse = response_test.json()
+
+            # await message.channel.send(jsonResponse["response"][0]["league"]["standings"][0][0]["rank"])
+            # await message.channel.send(jsonResponse["response"][0]["league"]["standings"][0][0]["team"]["name"])
+            # await message.channel.send(jsonResponse["response"][0]["league"]["standings"][0][0]["all"])
+            # await ctx.send(jsonResponse["response"][0]["league"]["standings"][0][0]["team"]["logo"])
+            ##############################################################################################
+
+            # await message.channel.send(jsonResponse["response"][0]["league"]["standings"][0][1])
+            # await message.channel.send(jsonResponse["response"][0]["league"]["standings"][0][2])
+
+            # await message.channel.send(jsonResponse["response"][0]["league"]["name"])
+            # await message.channel.send(jsonResponse["response"][14])
+            # await message.channel.send(jsonResponse["response"][0]["seasons"][12]["coverage"]["fixtures"]["events"])
+
 
         elif message.content.startswith('4'):
             channel = message.channel
