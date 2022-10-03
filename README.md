@@ -13,7 +13,7 @@ FUT Daily Bot is an open source Discord bot that is continuously growing. You ca
 * !fixtures
 
 ## :memo: To-Do
-* Print out all scores in a selected league
+* ~~Print out all scores in a selected league~~
 * Print out standings in a selected tournament
 * Predictions
 * ~~Connect API~~
