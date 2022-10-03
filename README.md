@@ -8,7 +8,7 @@ FUT Daily Bot is an open source Discord bot that is continuously growing. You ca
 
 ## :exclamation: Features
 3 commands currently and growing
-* !score
+* !standings
 * !tournament
 * !fixtures
 
