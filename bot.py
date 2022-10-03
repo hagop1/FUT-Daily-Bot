@@ -64,55 +64,190 @@ async def _command(ctx):
     async def on_message(message):
         if message.content.startswith('1'): #World Cup
             channel = message.channel #sets variable to same channel user message was sent
-            querystring = {"league":"39", "season":"2022", "date":actual_date}
+            querystring = {"league":"1", "season":"2022", "date":actual_date}
             response_test = requests.request("GET", fixture_url, headers = headers, params = querystring )
             jsonResponse = response_test.json()
             #most possible Premier league games in a day is 10
             i = -1
-            while i < 10:
-                i += 1 
-                await message.channel.send(( 
-                    jsonResponse["response"][i]["teams"]["home"]["name"] #team home 
-                    + '  :regional_indicator_v::regional_indicator_s:  '  
-                    + jsonResponse["response"][i]["teams"]["away"]["name"] #team away
-                    + " \n"
-                    + str(jsonResponse["response"][i]["score"]["fulltime"]["home"]) #score home
+            while i < 4:
+                i += 1
+                embed = discord.Embed(
+                                        title = "World Cup Fixtures",
+                                        color = 0xFF9900,
+                                        description = " "
+                                    )
+                embed.set_thumbnail(url = "https://github.com/hagop1/FUT-Daily-Bot/blob/in_progress/source/logos/WC.jpg?raw=true")
+                embed.add_field(name = jsonResponse["response"][i]["teams"]["home"]["name"] + ' :regional_indicator_v::regional_indicator_s: ' + jsonResponse["response"][i]["teams"]["away"]["name"],value = " .", inline = False)
+                embed.add_field(name = str(jsonResponse["response"][i]["score"]["fulltime"]["home"])
                     + " - "
-                    + str(jsonResponse["response"][i]["score"]["fulltime"]["away"]) #score away
-                    ))
+                    + str(jsonResponse["response"][i]["score"]["fulltime"]["away"]), value = ".", inline = False)
+                await ctx.send(embed = embed)
             # must itterate through all games under ["response"][number], <- can't keep hardcoding these numbers
 
         elif message.content.startswith('2'): #Champions League
             channel = message.channel
+            querystring = {"league":"2", "season":"2022", "date":actual_date}
+            response_test = requests.request("GET", fixture_url, headers = headers, params = querystring )
+            jsonResponse = response_test.json()
+            i = -1
+            while i < 10:
+                i += 1
+                embed = discord.Embed(
+                                        title = "Champions League Fixtures",
+                                        color = 0xFF9900,
+                                        description = " "
+                                    )
+                embed.set_thumbnail(url = "https://github.com/hagop1/FUT-Daily-Bot/blob/in_progress/source/logos/cl.jpg?raw=true")
+                embed.add_field(name = jsonResponse["response"][i]["teams"]["home"]["name"] + ' :regional_indicator_v::regional_indicator_s: ' + jsonResponse["response"][i]["teams"]["away"]["name"],value = " .", inline = False)
+                embed.add_field(name = str(jsonResponse["response"][i]["score"]["fulltime"]["home"])
+                    + " - "
+                    + str(jsonResponse["response"][i]["score"]["fulltime"]["away"]), value = ".", inline = False)
+                await ctx.send(embed = embed)
             
 
         elif message.content.startswith('3'): #Europa League
             channel = message.channel
+            querystring = {"league":"3", "season":"2022", "date":actual_date}
+            response_test = requests.request("GET", fixture_url, headers = headers, params = querystring )
+            jsonResponse = response_test.json()
+            #most possible Premier league games in a day is 10
+            i = -1
+            while i < 4:
+                i += 1
+                embed = discord.Embed(
+                                        title = "Europa League Fixtures",
+                                        color = 0xFF9900,
+                                        description = " "
+                                    )
+                embed.set_thumbnail(url = "https://github.com/hagop1/FUT-Daily-Bot/blob/in_progress/source/logos/el.jpg?raw=true")
+                embed.add_field(name = jsonResponse["response"][i]["teams"]["home"]["name"] + ' :regional_indicator_v::regional_indicator_s: ' + jsonResponse["response"][i]["teams"]["away"]["name"],value = " .", inline = False)
+                embed.add_field(name = str(jsonResponse["response"][i]["score"]["fulltime"]["home"])
+                    + " - "
+                    + str(jsonResponse["response"][i]["score"]["fulltime"]["away"]), value = ".", inline = False)
+                await ctx.send(embed = embed)
             
 
         elif message.content.startswith('4'): #Europa Conference League
             channel = message.channel
+            querystring = {"league":"848", "season":"2022", "date":actual_date}
+            response_test = requests.request("GET", fixture_url, headers = headers, params = querystring )
+            jsonResponse = response_test.json()
+            i = -1
+            while i < 10:
+                i += 1
+                embed = discord.Embed(
+                                        title = "Europa Conference League Fixtures",
+                                        color = 0xFF9900,
+                                        description = " "
+                                    )
+                embed.set_thumbnail(url = "https://github.com/hagop1/FUT-Daily-Bot/blob/in_progress/source/logos/ecl.jpg?raw=true")
+                embed.add_field(name = jsonResponse["response"][i]["teams"]["home"]["name"] + ' :regional_indicator_v::regional_indicator_s: ' + jsonResponse["response"][i]["teams"]["away"]["name"],value = " .", inline = False)
+                embed.add_field(name = str(jsonResponse["response"][i]["score"]["fulltime"]["home"])
+                    + " - "
+                    + str(jsonResponse["response"][i]["score"]["fulltime"]["away"]), value = ".", inline = False)
+                await ctx.send(embed = embed)
             
 
         elif message.content.startswith('5'): #Premier League
             channel = message.channel
-             
+            querystring = {"league":"39", "season":"2022", "date":actual_date}
+            response_test = requests.request("GET", fixture_url, headers = headers, params = querystring )
+            jsonResponse = response_test.json()
+            i = -1
+            while i < 10:
+                i += 1
+                embed = discord.Embed(
+                                        title = "Premier League Fixtures",
+                                        color = 0xFF9900,
+                                        description = " "
+                                    )
+                embed.set_thumbnail(url = "https://github.com/hagop1/FUT-Daily-Bot/blob/in_progress/source/logos/PL.jpg?raw=true")
+                embed.add_field(name = jsonResponse["response"][i]["teams"]["home"]["name"] + ' :regional_indicator_v::regional_indicator_s: ' + jsonResponse["response"][i]["teams"]["away"]["name"],value = " .", inline = False)
+                embed.add_field(name = str(jsonResponse["response"][i]["score"]["fulltime"]["home"])
+                    + " - "
+                    + str(jsonResponse["response"][i]["score"]["fulltime"]["away"]), value = ".", inline = False)
+                await ctx.send(embed = embed)
 
         elif message.content.startswith('6'): #La Liga
             channel = message.channel
+            querystring = {"league":"140", "season":"2022", "date":actual_date}
+            response_test = requests.request("GET", fixture_url, headers = headers, params = querystring )
+            jsonResponse = response_test.json()
+            i = -1
+            while i < 10:
+                i += 1
+                embed = discord.Embed(
+                                        title = "La Liga Fixtures",
+                                        color = 0xFF9900,
+                                        description = " "
+                                    )
+                embed.set_thumbnail(url = "https://github.com/hagop1/FUT-Daily-Bot/blob/in_progress/source/logos/LL.jpg?raw=true")
+                embed.add_field(name = jsonResponse["response"][i]["teams"]["home"]["name"] + ' :regional_indicator_v::regional_indicator_s: ' + jsonResponse["response"][i]["teams"]["away"]["name"],value = " .", inline = False)
+                embed.add_field(name = str(jsonResponse["response"][i]["score"]["fulltime"]["home"])
+                    + " - "
+                    + str(jsonResponse["response"][i]["score"]["fulltime"]["away"]), value = ".", inline = False)
+                await ctx.send(embed = embed)
             
 
-        elif message.content.startswith('7'): #Seria A
+        elif message.content.startswith('7'): #Serie A
             channel = message.channel
-            await channel.send('seria a')
+            querystring = {"league":"135", "season":"2022", "date":actual_date}
+            response_test = requests.request("GET", fixture_url, headers = headers, params = querystring )
+            jsonResponse = response_test.json()
+            i = -1
+            while i < 10:
+                i += 1
+                embed = discord.Embed(
+                                        title = "Serie A Fixtures",
+                                        color = 0xFF9900,
+                                        description = " "
+                                    )
+                embed.set_thumbnail(url = "https://github.com/hagop1/FUT-Daily-Bot/blob/in_progress/source/logos/SA.jpg?raw=true")
+                embed.add_field(name = jsonResponse["response"][i]["teams"]["home"]["name"] + ' :regional_indicator_v::regional_indicator_s: ' + jsonResponse["response"][i]["teams"]["away"]["name"],value = " .", inline = False)
+                embed.add_field(name = str(jsonResponse["response"][i]["score"]["fulltime"]["home"])
+                    + " - "
+                    + str(jsonResponse["response"][i]["score"]["fulltime"]["away"]), value = ".", inline = False)
+                await ctx.send(embed = embed)
 
         elif message.content.startswith('8'): #Bundesliga
             channel = message.channel
-            await channel.send('bundesliga')
+            querystring = {"league":"78", "season":"2022", "date":actual_date}
+            response_test = requests.request("GET", fixture_url, headers = headers, params = querystring )
+            jsonResponse = response_test.json()
+            i = -1
+            while i < 10:
+                i += 1
+                embed = discord.Embed(
+                                        title = "Bundesliga Fixtures",
+                                        color = 0xFF9900,
+                                        description = " "
+                                    )
+                embed.set_thumbnail(url = "https://github.com/hagop1/FUT-Daily-Bot/blob/in_progress/source/logos/BL.jpg?raw=true")
+                embed.add_field(name = jsonResponse["response"][i]["teams"]["home"]["name"] + ' :regional_indicator_v::regional_indicator_s: ' + jsonResponse["response"][i]["teams"]["away"]["name"],value = " .", inline = False)
+                embed.add_field(name = str(jsonResponse["response"][i]["score"]["fulltime"]["home"])
+                    + " - "
+                    + str(jsonResponse["response"][i]["score"]["fulltime"]["away"]), value = ".", inline = False)
+                await ctx.send(embed = embed)
 
         elif message.content.startswith('9'): #Ligue 1
             channel = message.channel
-            await channel.send('ligue 1')
+            querystring = {"league":"61", "season":"2022", "date":actual_date}
+            response_test = requests.request("GET", fixture_url, headers = headers, params = querystring )
+            jsonResponse = response_test.json()
+            i = -1
+            while i < 10:
+                i += 1
+                embed = discord.Embed(
+                                        title = "Ligue 1 Fixtures",
+                                        color = 0xFF9900,
+                                        description = " "
+                                    )
+                embed.set_thumbnail(url = "https://github.com/hagop1/FUT-Daily-Bot/blob/in_progress/source/logos/FL1.jpg?raw=true")
+                embed.add_field(name = jsonResponse["response"][i]["teams"]["home"]["name"] + ' :regional_indicator_v::regional_indicator_s: ' + jsonResponse["response"][i]["teams"]["away"]["name"],value = " .", inline = False)
+                embed.add_field(name = str(jsonResponse["response"][i]["score"]["fulltime"]["home"])
+                    + " - "
+                    + str(jsonResponse["response"][i]["score"]["fulltime"]["away"]), value = ".", inline = False)
+                await ctx.send(embed = embed)
 
         await bot.process_commands(message)
 
